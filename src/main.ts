@@ -3,11 +3,12 @@ import { Application, Assets } from 'pixi.js';
 import { addBackground } from './components/game/background/addBackground';
 import { initDevtools } from '@pixi/devtools';
 import { createDragon, DragonState } from "./components/game/dragon/dragon";
-import { addWay, OnPrizeOpenT, startIceCubeSpawning, stopIceSpawning } from "./components/game/way/way";
+import { addWayAsync, OnPrizeOpenT } from "./components/game/way/way";
 import { destroyCurrentWins, drawCurrentWin } from "./components/balance/drawCurrentWin";
 import { cashOutAnimation } from "./components/game/way/cashOutAnimation";
 import { addIceBackground } from "./components/game/background/addBackgroundIce";
 import { addIce1, addIce2, addIce3 } from "./components/game/background/addSideIceCubes";
+import 'pixi.js/prepare';
 
 type BalanceType = 'coin' | 'flash';
 
@@ -95,7 +96,18 @@ async function preload() {
     { alias: 'broken_ice_2', src: 'Asets/Ice_Cube_Broken_01.png'},
     { alias: 'broken_ice_3', src: 'Asets/Ice_Cube_Broken_02.png'}
   ];
+  
   await Assets.load(assets);
+
+
+  // aq initial loadis dro gavzarde magram frame skipebi shevamcire
+  const textureMap = await Assets.load(assets);
+  const textures = assets.map(({ alias }) => textureMap[alias]);
+
+  await app.renderer.prepare.upload(textures);
+
+  console.log("all assets are loaded");
+  
 }
 
 
@@ -104,6 +116,9 @@ async function preload() {
 (async () => {
   await setup();
   await preload();
+  const wayFunctions = await addWayAsync();
+  const {addWay, startIceCubeSpawning, stopIceSpawning } = wayFunctions;
+
   addBackground(app);
   addIceBackground(app);
   const dragon = createDragon(app);
@@ -152,7 +167,6 @@ async function preload() {
     const { type, value } = options;
     updateGameBalance(type, value)
     const gameBalanceValue = type === 'coin' ? gameBalance.coin : gameBalance.flash;
-    destroyCurrentWins(app);
     drawCurrentWin(app, gameBalanceValue, type);
   }
 

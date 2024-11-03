@@ -18,6 +18,5 @@ export function iceCubeEffectDownAnimation(): AnimatedSprite {
     iceMelting.animationSpeed = 0.5;
     iceMelting.rotation = -Math.PI / 2;
 
-    iceMelting.play();
     return iceMelting;
 }

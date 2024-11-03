@@ -17,6 +17,5 @@ export function getIceMeltingAnimation(): AnimatedSprite {
     iceMelting.loop = false;
     iceMelting.animationSpeed = 0.5;
 
-    iceMelting.play();
     return iceMelting;
 }

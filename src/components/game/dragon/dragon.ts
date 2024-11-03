@@ -77,7 +77,6 @@ export function createDragon(app: Application):DragonI {
         setState(DragonState.Attack, attackCallBack);
     }
 
-    // Return the public API
     return {
         setState,
         getPosition: () => ({ x: sprite.x, y: sprite.y }),
