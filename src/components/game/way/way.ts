@@ -1,4 +1,4 @@
-import { Application, AnimatedSprite, Container, Renderer, Sprite, Texture, TilingSprite } from "pixi.js";
+import { Application, Container, Renderer, Sprite, Texture, TilingSprite } from "pixi.js";
 import { getIceMeltingAnimation } from "./iceMelting";
 import { getIceSparklesAnimation } from "./sparkles";
 import { iceCubeEffectDownAnimation } from "./iceCubeEffectDown";
